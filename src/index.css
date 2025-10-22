@@ -13,6 +13,9 @@
 
   --color-theme: var(--theme);
   --color-error: var(--error);
+  --color-overlay: var(--overlay);
+
+  --font-paperozi: "Paperozi", sans-serif;
 }
 
 @font-face {
@@ -21,20 +24,42 @@
   font-display: swap;
 }
 
+@font-face {
+    font-family: 'NoonnuBasicGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noon-2410@1.0/NoonnuBasicGothicRegular.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Paperozi';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Paperozi';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+
 :root {
-  font-family: Pretendard, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Paperozi, Pretendard, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: 500;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --theme: #005bd6;
+  --theme: rgb(0, 91, 214);
+  --theme-rgb: 0, 91, 214;
   --error: rgb(255, 31, 31);
   --skeleton: #e5e7eb;
   --text: black;
+  --overlay: rgba(0, 0, 0, 0.3);
   --background: white;
 }
 
@@ -72,7 +97,30 @@ p {
 }
 
 span {
-  font-size: 1.2rem;
+  font-size: 0.8rem;
+}
+
+@media screen and (max-width: theme(--breakpoint-md)) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  span {
+    font-size: 0.7rem;
+  }
+
 }
 
 button {
@@ -95,5 +143,24 @@ button:focus-visible {
 }
 
 .image-card {
-  transition: left 0.5s ease-in-out, top 0.5s ease-in-out, width 0.3s ease-in-out;
+  transition: left 0.3s ease-in-out, top 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.image-card img {
+  transition: filter 0.3s ease;
+}
+
+.bubble {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.1rem 0.6rem;
+  border-radius: 0.8rem;
+  text-align: end;
+  width: fit-content;
+  height: fit-content;
+  word-break: keep-all;
+  color: white;
+  background-color: rgba(165, 165, 165, 0.4);
+  backdrop-filter: blur(1px);
 }

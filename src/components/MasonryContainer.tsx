@@ -3,10 +3,13 @@ import { useImages } from "@/hooks/useImages";
 import { debounce } from "@/lib/helpers";
 
 export default function MasonryContainer() {
-  const { useFetchImagesByPage } = useImages();
-  const { data: images, isLoading } = useFetchImagesByPage(10);
+  const { useFetchImagesByPage, useInfiniteImages } = useImages();
+  //const { data: images, isLoading } = useFetchImagesByPage(10);
+  const { images, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteImages();
   const [layout, setLayout] = useState({ cols: 4, colWidth: 0 });
   const gridRef = useRef<HTMLDivElement>(null);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
   // 반응형 열 개수 변경
   useEffect(() => {
@@ -67,28 +70,53 @@ export default function MasonryContainer() {
     });
   }, [images, isLoading, layout]);
 
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      const target = entries[0];
+      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    });
+
+    observer.observe(loadMoreRef.current);
+    return () => observer.disconnect();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
   return (
-    <div
-      ref={gridRef}
-      className="relative w-full flex justify-center items-start overflow-x-hidden"
-    >
-      {images?.map((img) => (
-        <div
-          key={img.id}
-          data-ratio={img.height / img.width}
-          style={{
-            aspectRatio: `${img.width} / ${img.height}`,
-          }}
-          className="image-card bg-gray-200 overflow-hidden p-1 md:p-2 bg-clip-content"
-        >
-          <img
-            src={img.download_url}
-            alt={img.author}
-            className="w-full h-full object-cover opacity-0 transition-opacity duration-500"
-            onLoad={(e) => (e.currentTarget.style.opacity = "1")}
-          />
-        </div>
-      ))}
-    </div>
+    <>
+      <section
+        ref={gridRef}
+        className="relative w-full flex justify-center items-start overflow-x-hidden"
+      >
+        {images?.map((img) => (
+          <div
+            key={img.id}
+            data-ratio={img.height / img.width}
+            style={{
+              aspectRatio: `${img.width} / ${img.height}`,
+            }}
+            className="group image-card bg-gray-200 overflow-hidden p-1 lg:p-2 bg-clip-content cursor-pointer"
+          >
+            <img
+              src={img.download_url}
+              alt={img.author}
+              className="w-full h-full object-cover opacity-0 transition-opacity duration-500 z-10"
+              onLoad={(e) => (e.currentTarget.style.opacity = "1")}
+            />
+            <div className="absolute inset-0 w-full h-full p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-row justify-between items-end">
+              <div className="bubble">
+                <span>{img.author}</span>
+              </div>
+              <div className="bubble">
+                <span>🖱️View</span>
+              </div>
+            </div>
+          </div>
+        ))}
+        {/* <div ref={loadMoreRef} className="bg-amber-200 h-8 w-full" /> */}
+      </section>
+    </>
   );
 }

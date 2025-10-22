@@ -1,4 +1,8 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { fetchImagesByIdFn, fetchImagesByPageFn } from "@/api/images";
 
 export function useImages() {
@@ -23,9 +27,30 @@ export function useImages() {
       queryFn: () => fetchImagesByPageFn(page),
     });
 
+  const useInfiniteImages = () => {
+    const query = useInfiniteQuery({
+      queryKey: ["images"],
+      queryFn: ({ pageParam = 1 }) => fetchImagesByPageFn(pageParam),
+      initialPageParam: 1,
+      getNextPageParam: (last, all) => {
+        //다음 페이지 번호를 계산
+        return last.length ? all.length + 1 : undefined;
+      },
+    });
+
+    // masonry 적용 가능하게 데이터 배열을 flatten 후 반환
+    const images = query.data?.pages.flat() ?? [];
+
+    return {
+      ...query,
+      images,
+    };
+  };
+
   return {
     prefetchImages,
     useFetchImage,
     useFetchImagesByPage,
+    useInfiniteImages,
   };
 }

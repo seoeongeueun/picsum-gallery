@@ -3,10 +3,15 @@ import MasonryContainer from "./components/MasonryContainer";
 function App() {
   return (
     <>
-      <main className="w-full h-full flex flex-col justify-start items-center">
-        <h1 className="text-theme p-4">Picsum List</h1>
+      <header className="flex flex-row justify-center items-center">
+        <h1 className="text-theme p-4 font-paperozi font-extrabold">
+          Picsum Lorem
+        </h1>
+        <h2 className="mb-2">📷</h2>
+      </header>
+
+      <main className="w-full px-2 md:px-4 lg:px-12">
         <MasonryContainer />
-        <div className="w-full px-4 md:px-10 lg:px-0 lg:w-3/4"></div>
       </main>
     </>
   );
