@@ -33,6 +33,7 @@
 
   --theme: #005bd6;
   --error: rgb(255, 31, 31);
+  --skeleton: #e5e7eb;
   --text: black;
   --background: white;
 }
@@ -43,6 +44,10 @@ html {
   width: 100%;
   height: 100%;
   background-color: var(--background);
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 #root {
@@ -87,4 +92,8 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.image-card {
+  transition: left 0.5s ease-in-out, top 0.5s ease-in-out, width 0.3s ease-in-out;
 }
