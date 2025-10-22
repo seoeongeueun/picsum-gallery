@@ -13,7 +13,7 @@
 
   --color-theme: var(--theme);
   --color-error: var(--error);
-  --color-overlay: var(--overlay);
+  --color-background: var(--background);
 
   --font-paperozi: "Paperozi", sans-serif;
 }
@@ -59,7 +59,7 @@
   --error: rgb(255, 31, 31);
   --skeleton: #e5e7eb;
   --text: black;
-  --overlay: rgba(0, 0, 0, 0.3);
+  --overlay-rgb: 34,34,34;
   --background: white;
 }
 
@@ -128,27 +128,27 @@ span {
 }
 
 .image-card img {
-  transition: filter 0.3s ease;
+  transition: opacity 0.5s ease-in-out;
   border-radius: 3px;
 }
 
 button {
   cursor: pointer;
-  color: var(--theme);
   padding: 0.1rem 0.6rem;
   border-radius: 3px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--theme);
+  background-color: rgba(var(--overlay-rgb), 0.4);
+  backdrop-filter: blur(2px);
+  color: white;
   font-weight: 500;
-  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  transition: border 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
 button.active, button:hover {
-  background-color: var(--theme);
-  color: white;
+  background-color: rgba(var(--theme-rgb), 0.9);
 }
 
 .bubble {
@@ -157,11 +157,15 @@ button.active, button:hover {
   align-items: center;
   padding: 0.1rem 0.6rem;
   border-radius: 3px;
-  text-align: end;
   width: fit-content;
   height: fit-content;
   word-break: keep-all;
   color: white;
-  background-color: rgba(165, 165, 165, 0.4);
-  backdrop-filter: blur(1px);
+  background-color: rgba(var(--overlay-rgb), 0.4);
+  backdrop-filter: blur(2px);
+  text-align: center;
+}
+
+header h1{
+  text-shadow: -1px 0px rgba(255,255,255,0.7), 0px 1px rgba(255,255,255,0.7), 0px -1px rgba(255,255,255,0.7), 1px 0px rgba(255,255,255,0.7);
 }

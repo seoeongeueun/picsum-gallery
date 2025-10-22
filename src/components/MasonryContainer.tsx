@@ -44,7 +44,7 @@ export default function MasonryContainer() {
     const items = Array.from(container.children) as HTMLElement[];
     const colHeights = new Array(cols).fill(0);
 
-    // requestAnimationFrame으로 부드럽게 레이아웃 적용
+    // 부드러운 레아아웃 적용을 위해
     requestAnimationFrame(() => {
       items.forEach((item) => {
         // 현재 가장 짧은 col의 인덱스를 찾기
@@ -73,6 +73,7 @@ export default function MasonryContainer() {
   useEffect(() => {
     if (!loadMoreRef.current) return;
 
+    // 로드 트리거가 화면에 보이는 경우에 다음 페이지 로드
     const observer = new IntersectionObserver((entries) => {
       const target = entries[0];
       if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
@@ -108,10 +109,10 @@ export default function MasonryContainer() {
                   700 / ratio
                 )}`}
                 alt={`Photo by ${img.author}`}
-                className="w-full h-full object-cover opacity-0 transition-opacity duration-500 z-10"
+                className="w-full h-full object-cover opacity-0 z-10"
                 onLoad={(e) => (e.currentTarget.style.opacity = "1")}
               />
-              <figcaption className="absolute inset-0 w-full h-full p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-row justify-between items-end">
+              <figcaption className="absolute inset-0 w-full h-full p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-row justify-between items-end gap-2">
                 <div className="bubble" aria-label="작가명">
                   <span>{img.author}</span>
                 </div>
@@ -122,7 +123,7 @@ export default function MasonryContainer() {
             </figure>
           );
         })}
-        {/* <div ref={loadMoreRef} className="bg-amber-200 h-8 w-full" /> */}
+        <div ref={loadMoreRef} className="bg-amber-200 h-8 w-full" />
       </section>
     </>
   );

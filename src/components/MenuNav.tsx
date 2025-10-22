@@ -16,7 +16,7 @@ export default function MenuNav({ selected, onSelect }: MenuNavProps) {
   return (
     <nav
       aria-label="Menu"
-      className="flex flex-row justify-center items-center gap-2 mb-2 w-full px-1"
+      className="pointer-events-auto flex flex-row justify-center items-center gap-2 mb-2 w-full px-1"
     >
       {menus.map(({ label, icon, value }) => (
         <button
