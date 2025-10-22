@@ -16,11 +16,12 @@
   --color-background: var(--background);
 
   --font-paperozi: "Paperozi", sans-serif;
+  --font-memoment: "memomentKkukkkuk", sans-serif;
 }
 
 @font-face {
-  font-family: 'Pretendard';
-  src: url('/fonts/PretendardVariable.woff2') format('woff2');
+  font-family: 'memomentKkukkkuk';
+  src: url('/fonts/memomentKkukkkuk.ttf') format('truetype');
   font-display: swap;
 }
 
@@ -93,7 +94,7 @@ h3 {
 }
 
 p {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 span {

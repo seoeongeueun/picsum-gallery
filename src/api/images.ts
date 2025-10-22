@@ -11,10 +11,19 @@ export const fetchImagesByPageFn = async (page: number) => {
 };
 
 //이미지 id로 단일 이미지를 반환
-export const fetchImagesByIdFn = async (id: string) => {
+export const fetchImageByIdFn = async (id: string) => {
   const res = await fetch(`https://picsum.photos/id/${id}`);
   if (!res.ok) throw new Error(`Error: Failed to fetch images with id ${id}`);
 
   const data = await res.json();
   return data as Image;
+};
+
+//유저 시드로 랜덤 이미지 반환
+export const fetchImageBySeedFn = async (seed: string) => {
+  const res = await fetch(`https://picsum.photos/seed/${seed}/1000`);
+  if (!res.ok)
+    throw new Error(`Error: Failed to fetch images with seed ${seed}`);
+
+  return res.url;
 };

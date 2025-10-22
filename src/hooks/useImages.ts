@@ -3,7 +3,11 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { fetchImagesByIdFn, fetchImagesByPageFn } from "@/api/images";
+import {
+  fetchImageByIdFn,
+  fetchImagesByPageFn,
+  fetchImageBySeedFn,
+} from "@/api/images";
 
 export function useImages() {
   const queryClient = useQueryClient();
@@ -17,7 +21,7 @@ export function useImages() {
   const useFetchImage = (id: string) =>
     useQuery({
       queryKey: ["image", id],
-      queryFn: () => fetchImagesByIdFn(id),
+      queryFn: () => fetchImageByIdFn(id),
       enabled: !!id,
     });
 
@@ -47,10 +51,18 @@ export function useImages() {
     };
   };
 
+  const useFetchImageBySeed = (seed: string) =>
+    useQuery({
+      queryKey: ["images", seed],
+      queryFn: () => fetchImageBySeedFn(seed),
+      enabled: !!seed,
+    });
+
   return {
     prefetchImages,
     useFetchImage,
     useFetchImagesByPage,
     useInfiniteImages,
+    useFetchImageBySeed,
   };
 }
