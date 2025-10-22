@@ -4,7 +4,6 @@ import { debounce } from "@/lib/helpers";
 
 export default function MasonryContainer() {
   const { useFetchImagesByPage, useInfiniteImages } = useImages();
-  //const { data: images, isLoading } = useFetchImagesByPage(10);
   const { images, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteImages();
   const [layout, setLayout] = useState({ cols: 4, colWidth: 0 });
@@ -39,6 +38,8 @@ export default function MasonryContainer() {
   useLayoutEffect(() => {
     if (isLoading || !images?.length || !gridRef.current) return;
 
+    const start = performance.now();
+
     const { cols, colWidth } = layout;
     const container = gridRef.current;
     const items = Array.from(container.children) as HTMLElement[];
@@ -67,6 +68,11 @@ export default function MasonryContainer() {
 
       container.style.position = "relative";
       container.style.height = `${Math.max(...colHeights)}px`;
+
+      const end = performance.now();
+      console.log(
+        `Layout pass (${items.length} items): ${(end - start).toFixed(2)} ms`
+      );
     });
   }, [images, isLoading, layout]);
 
