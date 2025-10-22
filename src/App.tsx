@@ -1,4 +1,5 @@
-import MasonryContainer from "./components/MasonryContainer";
+import MasonryContainer from "@/components/MasonryContainer";
+import LuckySection from "@/components/LuckySection";
 import MenuNav from "@/components/MenuNav";
 import { useState } from "react";
 import type { MenuType } from "./types/types";
@@ -21,6 +22,7 @@ function App() {
 
       <main className="w-full">
         {menu === "gallery" && <MasonryContainer />}
+        {menu === "lucky" && <LuckySection />}
       </main>
       <footer className="pointer-events-none block float-left fixed bottom-0 pb-4 z-50">
         <button

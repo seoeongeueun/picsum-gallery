@@ -148,7 +148,7 @@ button {
 }
 
 button.active, button:hover {
-  background-color: rgba(var(--theme-rgb), 0.9);
+  background-color: var(--theme);
 }
 
 .bubble {
@@ -168,4 +168,20 @@ button.active, button:hover {
 
 header h1{
   text-shadow: -1px 0px rgba(255,255,255,0.7), 0px 1px rgba(255,255,255,0.7), 0px -1px rgba(255,255,255,0.7), 1px 0px rgba(255,255,255,0.7);
+}
+
+input {
+  border-radius: 3px;
+  border: 1px solid rgba(var(--overlay-rgb), 0.4);
+  padding: 0.1rem 0.6rem;
+  color: black;
+}
+
+input::placeholder {
+  font-size: 0.7rem;
+  color: rgba(var(--overlay-rgb), 0.4);
+}
+
+input:focus {
+  outline: 1px solid var(--theme);
 }
