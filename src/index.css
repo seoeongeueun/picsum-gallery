@@ -39,8 +39,8 @@
 
 @font-face {
     font-family: 'Paperozi';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2') format('woff2');
-    font-weight: 400;
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2') format('woff2');
+    font-weight: 500;
     font-display: swap;
 }
 
@@ -123,31 +123,32 @@ span {
 
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
 .image-card {
   transition: left 0.3s ease-in-out, top 0.3s ease-in-out, width 0.3s ease-in-out;
 }
 
 .image-card img {
   transition: filter 0.3s ease;
+  border-radius: 3px;
+}
+
+button {
+  cursor: pointer;
+  color: var(--theme);
+  padding: 0.1rem 0.6rem;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--theme);
+  font-weight: 500;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+button.active, button:hover {
+  background-color: var(--theme);
+  color: white;
 }
 
 .bubble {
@@ -155,7 +156,7 @@ button:focus-visible {
   justify-content: center;
   align-items: center;
   padding: 0.1rem 0.6rem;
-  border-radius: 0.8rem;
+  border-radius: 3px;
   text-align: end;
   width: fit-content;
   height: fit-content;

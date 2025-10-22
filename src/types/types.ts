@@ -7,3 +7,12 @@ export type Image = {
   url: string;
   width: number;
 };
+
+//헤더의 메뉴 타입
+export type MenuType = "gallery" | "interests" | "lucky";
+
+export type MenuItem = {
+  label: string;
+  icon: string;
+  value: MenuType;
+};
