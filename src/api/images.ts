@@ -2,7 +2,7 @@ import type { GalleryImage } from "@/types/types";
 
 //페이지 번호로 이미지 목록을 반환
 export const fetchImagesByPageFn = async (page: number) => {
-  const res = await fetch(`https://picsum.photos/v2/list?page=${page}&limit=9`);
+  const res = await fetch(`https://picsum.photos/v2/list?page=${page}`);
   if (!res.ok)
     throw new Error(`Error: Failed to fetch images from page ${page}`);
 
@@ -19,7 +19,7 @@ export const fetchImageByIdFn = async (id: string) => {
   return data as GalleryImage;
 };
 
-//유저 시드로 랜덤 이미지 반환
+//시드로 랜덤 이미지 반환 (너비 1000 지정)
 export const fetchImageBySeedFn = async (seed: string) => {
   const res = await fetch(`https://picsum.photos/seed/${seed}/1000`);
   if (!res.ok)

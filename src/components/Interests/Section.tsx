@@ -1,28 +1,29 @@
 import { useImages } from "@/hooks/useImages";
 import { useSelectedImageStore } from "@/stores/useSelectedImageStore";
-import type { GalleryImage } from "@/types/types";
+import type { GalleryImage, Rect } from "@/types/types";
 import { MaxRectsPacker } from "maxrects-packer";
 import gsap from "gsap";
 import { useEffect, useState, useRef, useLayoutEffect } from "react";
+import "./interests.css";
 
-export default function InterestsSection() {
+export default function Interests() {
   const ids = useSelectedImageStore((s) => s.selectedIds);
   const { useFetchImagesByIds } = useImages();
-  const [imgs, setImgs] = useState();
+  const [rects, setRects] = useState<Rect<GalleryImage>[]>();
   const wallRef = useRef<HTMLDivElement>(null);
 
-  const { data: images, isLoading, isError } = useFetchImagesByIds(ids);
+  const { data: images, isFetching, isError } = useFetchImagesByIds(ids);
 
   useEffect(() => {
-    if (!isLoading && images && images.length > 0) {
-      setImgs(packImages(images));
+    if (!isFetching && images && images.length > 0) {
+      setRects(packImages(images));
     }
-  }, [images, isLoading]);
+  }, [images, isFetching]);
 
   // maxRectsPacker 로직을 이용해 이미지의 최적 위치를 반환
-  function packImages(images: GalleryImage[]) {
+  function packImages(images: GalleryImage[]): Rect<GalleryImage>[] {
     const wall = wallRef.current;
-    if (!wall) return;
+    if (!wall) return [];
 
     const gap = 50; //이미지 사이 간격 값
     const packer = new MaxRectsPacker(
@@ -48,11 +49,11 @@ export default function InterestsSection() {
       packer.add(scaledWidth, scaledWidth / (img.width / img.height), img);
     }
 
-    return packer.bins[0].rects;
+    return packer.bins[0].rects ?? [];
   }
 
   useLayoutEffect(() => {
-    if (!imgs?.length) return;
+    if (!rects?.length) return;
 
     const ctx = gsap.context(() => {
       const frames = gsap.utils.toArray<HTMLDivElement>(".frame");
@@ -75,7 +76,7 @@ export default function InterestsSection() {
     }, wallRef);
 
     return () => ctx.revert();
-  }, [imgs]);
+  }, [rects]);
 
   const dropAnimation = (frame: HTMLImageElement) => {
     if (!wallRef.current) return;
@@ -122,28 +123,38 @@ export default function InterestsSection() {
   return (
     <section
       aria-label="관심 목록"
-      className="w-full h-full overflow-visible relative p-8"
+      className="w-full h-full overflow-visible relative p-8 text-theme"
     >
       <div ref={wallRef} className="relative w-full h-full images-wall">
-        {imgs?.map((rect) => (
-          <img
-            key={rect.data.id}
-            src={`https://picsum.photos/id/${rect.data.id}/500/${Math.trunc(
-              500 / (rect.width / rect.height)
-            )}`}
-            alt={`Frame of ${rect.data.author}'s photo`}
-            onClick={(e) => dropAnimation(e.currentTarget)}
-            className="frame hover:rotate-1"
-            style={{
-              position: "absolute",
-              left: `${rect.x}px`,
-              top: `${rect.y}px`,
-              width: `${rect.width}px`,
-              height: `${rect.height}px`,
-              objectFit: "cover",
-            }}
-          />
-        ))}
+        {isFetching ? (
+          <div className="absolute inset-0 flex justify-center items-center text-theme">
+            Loading...
+          </div>
+        ) : !images || images?.length === 0 ? (
+          <div className="absolute inset-0 flex justify-center items-center text-theme">
+            Interests Gallery is Empty 🕳️
+          </div>
+        ) : (
+          rects?.map((rect) => (
+            <img
+              key={rect.data.id}
+              src={`https://picsum.photos/id/${rect.data.id}/500/${Math.trunc(
+                500 / (rect.width / rect.height)
+              )}`}
+              alt={`Frame of ${rect.data.author}'s photo`}
+              onClick={(e) => dropAnimation(e.currentTarget)}
+              className="frame hover:rotate-1"
+              style={{
+                position: "absolute",
+                left: `${rect.x}px`,
+                top: `${rect.y}px`,
+                width: `${rect.width}px`,
+                height: `${rect.height}px`,
+                objectFit: "cover",
+              }}
+            />
+          ))
+        )}
       </div>
     </section>
   );

@@ -9,6 +9,7 @@ import {
   fetchImagesByPageFn,
   fetchImageBySeedFn,
 } from "@/api/images";
+import type { GalleryImage } from "@/types/types";
 
 export function useImages() {
   const queryClient = useQueryClient();
@@ -68,8 +69,11 @@ export function useImages() {
       })),
       combine: (results) => {
         return {
-          data: results.map((result) => result.data),
-          isLoading: results.some((r) => r.isLoading),
+          //아직 fetching 중인 이미지가 반환되지 않도록 데이터 필어터링
+          data: results
+            .map((result) => result.data)
+            .filter((img): img is GalleryImage => !!img),
+          isFetching: results.some((r) => r.isFetching),
           isError: results.some((r) => r.isError),
         };
       },

@@ -16,3 +16,12 @@ export type MenuItem = {
   icon: string;
   value: MenuType;
 };
+
+//maxrectspacker에서 사용할 rect 타입
+export type Rect<T = unknown> = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  data: T;
+};

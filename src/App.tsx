@@ -1,13 +1,21 @@
-import MasonryContainer from "@/components/MasonryContainer";
-import LuckySection from "@/components/LuckySection";
-import InterestsSection from "./components/InterestsSection";
+import Gallery from "@/components/Gallery/Section";
+import Lucky from "@/components/Lucky/Section";
+import Interests from "./components/Interests/Section";
 import MenuNav from "@/components/MenuNav";
 import { useState } from "react";
 import type { MenuType } from "./types/types";
 
+//선택 메뉴에 따라 섹션 컴포넌트 반환
+const sections: Record<MenuType, React.JSX.Element> = {
+  gallery: <Gallery />,
+  lucky: <Lucky />,
+  interests: <Interests />,
+};
+
 function App() {
   const [menu, setMenu] = useState<MenuType>("gallery");
 
+  // 위로가기 버튼
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -21,11 +29,7 @@ function App() {
         <MenuNav selected={menu} onSelect={setMenu} />
       </header>
 
-      <main className="w-full h-full">
-        {menu === "gallery" && <MasonryContainer />}
-        {menu === "lucky" && <LuckySection />}
-        {menu === "interests" && <InterestsSection />}
-      </main>
+      <main className="w-full h-full">{sections[menu]}</main>
       <footer className="pointer-events-none block float-left fixed bottom-0 p-4 z-50 w-full">
         <button
           type="button"

@@ -2,9 +2,10 @@ import { useEffect, useRef, useState, useLayoutEffect } from "react";
 import { useImages } from "@/hooks/useImages";
 import { debounce } from "@/lib/helpers";
 import { useSelectedImageStore } from "@/stores/useSelectedImageStore";
+import "./gallery.css";
 
-export default function MasonryContainer() {
-  const { useFetchImagesByPage, useInfiniteImages } = useImages();
+export default function Gallery() {
+  const { useInfiniteImages } = useImages();
   const { images, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteImages();
   const [layout, setLayout] = useState({ cols: 4, colWidth: 0 });
@@ -82,7 +83,7 @@ export default function MasonryContainer() {
   useEffect(() => {
     if (!loadMoreRef.current) return;
 
-    // 로드 트리거가 화면에 보이는 경우에 다음 페이지 로드
+    // 로드 트리거가 화면에 보이는 경우 다음 페이지 로드
     const observer = new IntersectionObserver((entries) => {
       const target = entries[0];
       if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
@@ -98,10 +99,11 @@ export default function MasonryContainer() {
     <>
       <section
         ref={gridRef}
-        aria-label="Gallery"
+        aria-label="갤러리"
         className="relative w-full flex justify-center items-start overflow-x-hidden"
       >
         {images?.map((img) => {
+          // 원본의 비율을 유지할 수 있도록 미리 계산 후 data에 지정
           const ratio = img.width / img.height;
 
           return (
@@ -133,7 +135,7 @@ export default function MasonryContainer() {
             </figure>
           );
         })}
-        <div ref={loadMoreRef} className="bg-amber-200 h-8 w-full" />
+        <div ref={loadMoreRef} className="bg-transparent h-8 w-full" />
       </section>
     </>
   );

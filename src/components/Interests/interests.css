@@ -1,0 +1,34 @@
+/* 짝수 요소 프레임 */
+.images-wall > img:nth-child(even) {
+  background-color: rgb(241, 241, 241);
+  padding: 0.2rem;
+  border: 0.4rem solid #aaafb5;
+  box-shadow: 1px 4px 5px 8px rgba(87, 84, 84, 0.3);
+  outline: 9px solid #334a96;
+}
+
+/* 홀수 요소 프레임 */
+.images-wall > img:nth-child(odd) {
+  background-color: rgb(218, 218, 218);
+  padding: 0;
+  border: 3px solid #e2e6e7;
+  box-shadow: 1px 5px 3px 16px rgba(59, 58, 58, 0.1);
+  outline: 1rem solid #aaafb5;
+}
+
+/* 추가 변수용 매 3번째 요소 프레임 */
+.images-wall > img:nth-child(3n) {
+  background-color:rgb(192, 192, 192);
+  border: 1rem solid #ffffff;
+  padding: 0.5rem;
+  box-shadow: inset 0 0 3px 1px rgba(73, 69, 68, 0.3), 2px 3px 3px 3px rgba(61, 58, 58, 0.3);
+  outline: 5px solid #383838;
+}
+
+.frame {
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  transform-origin: bottom center;
+  cursor: pointer;
+  background-color: var(--skeleton);
+}
