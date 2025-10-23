@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState, useLayoutEffect } from "react";
 import { useImages } from "@/hooks/useImages";
 import { debounce } from "@/lib/helpers";
+import { useSelectedImageStore } from "@/stores/useSelectedImageStore";
 
 export default function MasonryContainer() {
   const { useFetchImagesByPage, useInfiniteImages } = useImages();
   const { images, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteImages();
   const [layout, setLayout] = useState({ cols: 4, colWidth: 0 });
+  const { toggleId, isSelected } = useSelectedImageStore();
+
   const gridRef = useRef<HTMLDivElement>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
@@ -109,6 +112,7 @@ export default function MasonryContainer() {
                 aspectRatio: ratio,
               }}
               className="group image-card bg-gray-200 overflow-hidden p-1 lg:p-2 bg-clip-content cursor-pointer"
+              onClick={() => toggleId(img.id)}
             >
               <img
                 src={`https://picsum.photos/id/${img.id}/700/${Math.trunc(
