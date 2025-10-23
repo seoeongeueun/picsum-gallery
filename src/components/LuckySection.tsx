@@ -41,13 +41,17 @@ export default function LuckySection() {
       {isFetching && <p>Finding Image for '{seed}'...</p>}
       {imgUrl && (
         <figure className="polaroid rotate-1 max-w-[14rem] aspect-[14/16.8] drop-shadow-lg bg-white border border-px border-gray-100 p-3 relative">
-          <div className="tape w-6 h-12 bg-theme opacity-80 rotate-[20deg] rounded-xs absolute -top-6 left-1/2"></div>
-          <img
-            src={imgUrl}
-            alt="랜덤 이미지"
-            className="w-full aspect-square"
-          ></img>
-          <span className="absolute bottom-2 right-2 font-memoment text-black">
+          <div className="z-30 tape w-6 h-12 bg-theme opacity-80 rotate-[20deg] rounded-xs absolute -top-6 left-1/2"></div>
+          <div className="z-20 w-full aspect-square bg-skeleton overflow-hidden">
+            <img
+              src={imgUrl}
+              alt="랜덤 이미지"
+              className="w-full h-full opacity-0 transition-opacity duration-700"
+              loading="lazy"
+              onLoad={(e) => (e.currentTarget.style.opacity = "1")}
+            ></img>
+          </div>
+          <span className="absolute bottom-2 right-2 font-memoment text-black animate-fadein">
             {seed} ♧
           </span>
         </figure>

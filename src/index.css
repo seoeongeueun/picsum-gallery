@@ -14,9 +14,12 @@
   --color-theme: var(--theme);
   --color-error: var(--error);
   --color-background: var(--background);
+  --color-skeleton: var(--skeleton);
 
   --font-paperozi: "Paperozi", sans-serif;
   --font-memoment: "memomentKkukkkuk", sans-serif;
+
+  --animate-fadein: fadeIn 0.5s ease-in-out 0.1s both;
 }
 
 @font-face {
@@ -185,4 +188,13 @@ input::placeholder {
 
 input:focus {
   outline: 1px solid var(--theme);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1
+  }
 }
