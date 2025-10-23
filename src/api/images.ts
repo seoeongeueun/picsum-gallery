@@ -1,4 +1,4 @@
-import type { Image } from "@/types/types";
+import type { GalleryImage } from "@/types/types";
 
 //페이지 번호로 이미지 목록을 반환
 export const fetchImagesByPageFn = async (page: number) => {
@@ -7,16 +7,16 @@ export const fetchImagesByPageFn = async (page: number) => {
     throw new Error(`Error: Failed to fetch images from page ${page}`);
 
   const data = await res.json();
-  return data as Image[];
+  return data as GalleryImage[];
 };
 
-//이미지 id로 단일 이미지를 반환
+//이미지 id로 단일 이미지 정보를 반환
 export const fetchImageByIdFn = async (id: string) => {
-  const res = await fetch(`https://picsum.photos/id/${id}`);
+  const res = await fetch(`https://picsum.photos/id/${id}/info`);
   if (!res.ok) throw new Error(`Error: Failed to fetch images with id ${id}`);
 
   const data = await res.json();
-  return data as Image;
+  return data as GalleryImage;
 };
 
 //유저 시드로 랜덤 이미지 반환

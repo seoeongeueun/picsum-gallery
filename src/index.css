@@ -75,9 +75,9 @@ html {
   background-color: var(--background);
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */
 
 #root {
   width: 100%;
@@ -197,4 +197,31 @@ input:focus {
   100% {
     opacity: 1
   }
+}
+
+/* 짝수 요소 프레임 */
+.images-wall > *:nth-child(even) {
+  background-color: rgb(218, 218, 218);
+  padding: 0.2rem;
+  border: 0.4rem solid #fff7f1;
+  box-shadow: 0 0 3px 8px rgb(99, 82, 78);
+  outline: 9px solid #966233;
+}
+
+/* 홀수 요소 프레임 */
+.images-wall > *:nth-child(odd) {
+  background-color: rgb(218, 218, 218);
+  padding: 0;
+  border: 3px solid #e2e6e7;
+  box-shadow: 0 0 3px 15px rgb(70, 68, 68);
+  outline: 1rem solid #aaafb5;
+}
+
+/* 추가 변수용 매 3번째 요소 프레임 */
+.images-wall > *:nth-child(3n) {
+  background-color:rgb(192, 192, 192);
+  border: 1rem solid #ffffff;
+  padding: 0.5rem;
+  box-shadow: inset 0 0 3px 1px rgba(99, 82, 78, 0.3), 0 0 3px 5px rgb(99, 82, 78);
+  outline: 5px solid #e3c4a7;
 }

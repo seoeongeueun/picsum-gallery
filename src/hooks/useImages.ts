@@ -2,6 +2,7 @@ import {
   useInfiniteQuery,
   useQuery,
   useQueryClient,
+  useQueries,
 } from "@tanstack/react-query";
 import {
   fetchImageByIdFn,
@@ -58,11 +59,28 @@ export function useImages() {
       enabled: !!seed,
     });
 
+  const useFetchImagesByIds = (ids: Set<string>) =>
+    useQueries({
+      queries: [...ids].map((id) => ({
+        queryKey: ["image", id],
+        queryFn: () => fetchImageByIdFn(id),
+        enabled: !!id,
+      })),
+      combine: (results) => {
+        return {
+          data: results.map((result) => result.data),
+          isLoading: results.some((r) => r.isLoading),
+          isError: results.some((r) => r.isError),
+        };
+      },
+    });
+
   return {
     prefetchImages,
     useFetchImage,
     useFetchImagesByPage,
     useInfiniteImages,
     useFetchImageBySeed,
+    useFetchImagesByIds,
   };
 }

@@ -1,5 +1,6 @@
 import MasonryContainer from "@/components/MasonryContainer";
 import LuckySection from "@/components/LuckySection";
+import InterestsSection from "./components/InterestsSection";
 import MenuNav from "@/components/MenuNav";
 import { useState } from "react";
 import type { MenuType } from "./types/types";
@@ -12,7 +13,7 @@ function App() {
   };
 
   return (
-    <div className="px-2 md:px-4 lg:px-12">
+    <div className="px-2 md:px-4 lg:px-12 w-full h-full flex flex-col items-center justify-start">
       <header className="sticky top-0 pointer-events-none z-50 py-4 flex flex-col items-center justify-center justify-self-center w-fit">
         <h1 className="text-theme p-4 font-paperozi font-extrabold">
           Picsum Lorem
@@ -20,11 +21,12 @@ function App() {
         <MenuNav selected={menu} onSelect={setMenu} />
       </header>
 
-      <main className="w-full">
+      <main className="w-full h-full">
         {menu === "gallery" && <MasonryContainer />}
         {menu === "lucky" && <LuckySection />}
+        {menu === "interests" && <InterestsSection />}
       </main>
-      <footer className="pointer-events-none block float-left fixed bottom-0 pb-4 z-50">
+      <footer className="pointer-events-none block float-left fixed bottom-0 p-4 z-50 w-full">
         <button
           type="button"
           onClick={handleScrollToTop}
