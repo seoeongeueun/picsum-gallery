@@ -8,8 +8,8 @@ interface MenuNavProps {
 
 export default function MenuNav({ selected, onSelect }: MenuNavProps) {
   const menus: MenuItem[] = [
-    { label: "Gallery", icon: "🖼️", value: "gallery" },
-    { label: "Interests", icon: "📌", value: "interests" },
+    { label: "Gallery", icon: "👀", value: "gallery" },
+    { label: "Interests", icon: "🖼️", value: "interests" },
     { label: "I'm Feeling Lucky", icon: "🔮", value: "lucky" },
   ];
 

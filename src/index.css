@@ -144,8 +144,7 @@ button {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: rgba(var(--overlay-rgb), 0.4);
-  backdrop-filter: blur(2px);
+  background-color: rgba(var(--overlay-rgb), 0.3);
   color: white;
   font-weight: 500;
   transition: border 0.3s ease-in-out, background-color 0.3s ease-in-out;
@@ -201,11 +200,11 @@ input:focus {
 
 /* 짝수 요소 프레임 */
 .images-wall > *:nth-child(even) {
-  background-color: rgb(218, 218, 218);
+  background-color: rgb(241, 241, 241);
   padding: 0.2rem;
-  border: 0.4rem solid #fff7f1;
-  box-shadow: 0 0 3px 8px rgb(99, 82, 78);
-  outline: 9px solid #966233;
+  border: 0.4rem solid #aaafb5;
+  box-shadow: 1px 4px 5px 8px rgba(87, 84, 84, 0.3);
+  outline: 9px solid #334a96;
 }
 
 /* 홀수 요소 프레임 */
@@ -213,7 +212,7 @@ input:focus {
   background-color: rgb(218, 218, 218);
   padding: 0;
   border: 3px solid #e2e6e7;
-  box-shadow: 0 0 3px 15px rgb(70, 68, 68);
+  box-shadow: 1px 5px 3px 16px rgba(59, 58, 58, 0.1);
   outline: 1rem solid #aaafb5;
 }
 
@@ -222,6 +221,14 @@ input:focus {
   background-color:rgb(192, 192, 192);
   border: 1rem solid #ffffff;
   padding: 0.5rem;
-  box-shadow: inset 0 0 3px 1px rgba(99, 82, 78, 0.3), 0 0 3px 5px rgb(99, 82, 78);
-  outline: 5px solid #e3c4a7;
+  box-shadow: inset 0 0 3px 1px rgba(73, 69, 68, 0.3), 2px 3px 3px 3px rgba(61, 58, 58, 0.3);
+  outline: 5px solid #383838;
+}
+
+.frame {
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  transform-origin: bottom center;
+  cursor: pointer;
+  background-color: var(--skeleton);
 }

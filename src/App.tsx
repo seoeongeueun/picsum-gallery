@@ -14,9 +14,9 @@ function App() {
 
   return (
     <div className="px-2 md:px-4 lg:px-12 w-full h-full flex flex-col items-center justify-start">
-      <header className="sticky top-0 pointer-events-none z-50 py-4 flex flex-col items-center justify-center justify-self-center w-fit">
+      <header className="sticky top-0 pointer-events-none z-50 py-4 flex flex-col items-center justify-center justify-self-center w-full bg-white">
         <h1 className="text-theme p-4 font-paperozi font-extrabold">
-          Picsum Lorem
+          Picsum Gallery
         </h1>
         <MenuNav selected={menu} onSelect={setMenu} />
       </header>
