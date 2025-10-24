@@ -53,7 +53,7 @@ export function useImages() {
 
     const saveScrollState = (y: number) => {
       if (!query.data) return;
-      console.log(y);
+
       queryClient.setQueryData(["images", "scroll"], {
         scrollY: y,
         pageCount: query.data.pages.length,
@@ -74,7 +74,6 @@ export function useImages() {
         await query.fetchNextPage();
       }
 
-      console.log(scrollData.scrollY);
       // 모든 데이터 로딩 후 스크롤 복원
       window.scrollTo({
         top: scrollData.scrollY,

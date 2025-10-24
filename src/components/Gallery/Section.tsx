@@ -51,7 +51,6 @@ export default function Gallery() {
 
   useLayoutEffect(() => {
     if (isLoading || !images?.length || !gridRef.current) return;
-    const start = performance.now();
 
     const { cols, colWidth } = layout;
     const container = gridRef.current;
@@ -79,10 +78,6 @@ export default function Gallery() {
 
       container.style.height = `${Math.max(...colHeights)}px`;
 
-      const end = performance.now();
-      console.log(
-        `Layout pass (${items.length} items): ${(end - start).toFixed(2)} ms`
-      );
       requestAnimationFrame(() => restoreScrollState());
     });
   }, [images, isLoading, layout]);
