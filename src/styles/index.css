@@ -38,12 +38,13 @@
   --theme: rgb(0, 91, 214);
   --theme-rgb: 0, 91, 214;
   --error: rgb(255, 31, 31);
-  --skeleton: #e5e7eb;
+  --skeleton: #d7d9db;
   --text: black;
   --overlay-rgb: 34,34,34;
-  --background: white;
+  --background: rgb(245 244 242);
   --button-padding: 0.1rem 0.6rem;
   --button-radius: 3px;
+  --header-height: 0;
 }
 
 body,

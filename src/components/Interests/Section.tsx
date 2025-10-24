@@ -62,14 +62,14 @@ export default function Interests() {
         frames,
         {
           opacity: 0,
-          y: -20,
+          y: -50,
         },
         {
           opacity: 1,
           y: 0,
           duration: 0.5,
           ease: "back.out(1.7)", // 바운스
-          stagger: 0.08, //순서대로 딜레이
+          stagger: 0.12, //순서대로 딜레이
           clearProps: "transform", //완료 후 transform 속성을 제거해서 hover 회전이 적용될 수 잇ㄱ게
         }
       );
@@ -123,7 +123,7 @@ export default function Interests() {
   return (
     <section
       aria-label="관심 목록"
-      className="w-full h-full overflow-visible relative p-8 text-theme"
+      className="w-full h-full relative p-8 text-theme"
     >
       <div ref={wallRef} className="relative w-full h-full images-wall">
         {isFetching ? (

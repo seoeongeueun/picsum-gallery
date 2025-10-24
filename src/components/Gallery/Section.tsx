@@ -113,7 +113,7 @@ export default function Gallery() {
               style={{
                 aspectRatio: ratio,
               }}
-              className="group image-card bg-gray-200 overflow-hidden p-1 lg:p-2 bg-clip-content cursor-pointer"
+              className="group image-card bg-skeleton overflow-hidden p-1 lg:p-2 bg-clip-content cursor-pointer"
               onClick={() => toggleId(img.id)}
             >
               <img

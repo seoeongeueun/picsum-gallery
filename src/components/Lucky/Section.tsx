@@ -46,7 +46,7 @@ export default function LuckySection() {
             <img
               src={imgUrl}
               alt="랜덤 이미지"
-              className="w-full h-full opacity-0 transition-opacity duration-700"
+              className="w-full h-full opacity-0 transition-opacity duration-700 delay-200"
               loading="lazy"
               onLoad={(e) => (e.currentTarget.style.opacity = "1")}
             ></img>
