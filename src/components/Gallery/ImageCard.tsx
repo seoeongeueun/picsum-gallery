@@ -16,7 +16,7 @@ function ImageCard({ img, onSaveScroll }: ImageCardProps) {
   const ratio = img.width / img.height;
 
   const handleImageClick = (id: string) => {
-    onSaveScroll(window.scrollY); //카드 클릭 트리거 전 현재 스크롤 위치 저장
+    onSaveScroll(window.scrollY);
     toggleId(id);
 
     // 먼저 스크롤 저장 후 상세 페이지로 이동

@@ -4,6 +4,7 @@ import { debounce } from "@/lib/helpers";
 import ImageCard from "./ImageCard";
 import Spinner from "@/components/Spinner";
 import "./gallery.css";
+import { throttle } from "@/lib/helpers";
 
 export default function Gallery() {
   const { useInfiniteImages } = useImages();
@@ -23,6 +24,8 @@ export default function Gallery() {
 
   // 반응형 열 개수 변경
   useEffect(() => {
+    restoreScrollState();
+
     const updateLayout = () => {
       const container = gridRef.current;
       if (!container) return;

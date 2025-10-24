@@ -17,7 +17,8 @@ const sections: Record<MenuType, React.JSX.Element> = {
 export default function MainLayout() {
   const [menu, setMenu] = useState<MenuType>("gallery");
   const headerRef = useRef<HTMLDivElement>(null);
-  const { prefetchImages } = useImages();
+  const { prefetchImages, useInfiniteImages } = useImages();
+  const { saveScrollState } = useInfiniteImages();
 
   // 위로가기 버튼
   const handleScrollToTop = () => {
@@ -53,12 +54,16 @@ export default function MainLayout() {
     <div className="px-2 md:px-4 lg:px-12 w-full h-full flex flex-col">
       <header
         ref={headerRef}
-        className="fixed top-0 transition-[top] duration-500 ease-out pointer-events-none z-50 py-4 flex flex-col items-center justify-center justify-self-center w-full bg-background"
+        className="fixed left-0 top-0 transition-[top] duration-500 ease-out pointer-events-none z-50 py-4 flex flex-col items-center justify-center justify-self-center w-full bg-background"
       >
         <h1 className="text-theme p-4 font-paperozi font-extrabold">
           Picsum Gallery
         </h1>
-        <MenuNav selected={menu} onSelect={setMenu} />
+        <MenuNav
+          selected={menu}
+          onSelect={setMenu}
+          onSaveScroll={saveScrollState}
+        />
       </header>
       <main className="pt-36 md:pt-44 w-full h-full">{sections[menu]}</main>
       {menu === "gallery" && (
