@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useLayoutEffect } from "react";
 import { useImages } from "@/hooks/useImages";
 import { debounce } from "@/lib/helpers";
-import { useSelectedImageStore } from "@/stores/useSelectedImageStore";
+import ImageCard from "./ImageCard";
 import "./gallery.css";
 
 export default function Gallery() {
@@ -9,7 +9,6 @@ export default function Gallery() {
   const { images, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteImages();
   const [layout, setLayout] = useState({ cols: 4, colWidth: 0 });
-  const { toggleId, isSelected } = useSelectedImageStore();
 
   const gridRef = useRef<HTMLDivElement>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -66,7 +65,7 @@ export default function Gallery() {
 
         // 이미지의 비율 기반 높이 계산
         const ratio = parseFloat(item.dataset.ratio || "1");
-        const height = colWidth * ratio;
+        const height = colWidth / ratio;
         colHeights[minCol] += height;
       });
 
@@ -102,39 +101,9 @@ export default function Gallery() {
         aria-label="갤러리"
         className="relative w-full flex justify-center items-start overflow-x-hidden"
       >
-        {images?.map((img) => {
-          // 원본의 비율을 유지할 수 있도록 미리 계산 후 data에 지정
-          const ratio = img.width / img.height;
-
-          return (
-            <figure
-              key={img.id}
-              data-ratio={img.height / img.width}
-              style={{
-                aspectRatio: ratio,
-              }}
-              className="group image-card bg-skeleton overflow-hidden p-1 lg:p-2 bg-clip-content cursor-pointer"
-              onClick={() => toggleId(img.id)}
-            >
-              <img
-                src={`https://picsum.photos/id/${img.id}/700/${Math.trunc(
-                  700 / ratio
-                )}`}
-                alt={`Photo by ${img.author}`}
-                className="w-full h-full object-cover opacity-0 z-10"
-                onLoad={(e) => (e.currentTarget.style.opacity = "1")}
-              />
-              <figcaption className="absolute inset-0 w-full h-full p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex flex-row justify-between items-end gap-2">
-                <div className="bubble" aria-label="작가명">
-                  <span>{img.author}</span>
-                </div>
-                <div className="bubble" aria-label="이미지 상세보기">
-                  <span>🖱️View</span>
-                </div>
-              </figcaption>
-            </figure>
-          );
-        })}
+        {images?.map((img) => (
+          <ImageCard key={img.id} img={img} />
+        ))}
         <div ref={loadMoreRef} className="bg-transparent h-8 w-full" />
       </section>
     </>

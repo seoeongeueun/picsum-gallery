@@ -19,7 +19,6 @@
   height: fit-content;
   word-break: keep-all;
   color: white;
-  background-color: rgba(var(--overlay-rgb), 0.4);
-  backdrop-filter: blur(2px);
+  background-color: rgba(var(--skeleton-rgb), 0.2);
   text-align: center;
 }

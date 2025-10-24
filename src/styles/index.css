@@ -18,6 +18,7 @@
   --color-error: var(--error);
   --color-background: var(--background);
   --color-skeleton: var(--skeleton);
+  --color-overlay: rgba(var(--overlay-rgb), 0.3);
 
   --font-paperozi: "Paperozi", sans-serif;
   --font-memoment: "memomentKkukkkuk", sans-serif;
@@ -38,9 +39,9 @@
   --theme: rgb(0, 91, 214);
   --theme-rgb: 0, 91, 214;
   --error: rgb(255, 31, 31);
-  --skeleton: #d7d9db;
+  --skeleton: #c8c9cc;
+  --skeleton-rgb: 200, 201, 204;
   --text: black;
-  --overlay-rgb: 34,34,34;
   --background: rgb(245 244 242);
   --button-padding: 0.1rem 0.6rem;
   --button-radius: 3px;
@@ -55,9 +56,9 @@ html {
   background-color: var(--background);
 }
 
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
   display: none;
-} */
+}
 
 #root {
   width: 100%;
@@ -115,7 +116,7 @@ button {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: rgba(var(--overlay-rgb), 0.3);
+  background-color: var(--skeleton);
   color: white;
   font-weight: 500;
   transition: border 0.3s ease-in-out, background-color 0.3s ease-in-out;
@@ -131,14 +132,14 @@ header h1{
 
 input {
   border-radius: 3px;
-  border: 1px solid rgba(var(--overlay-rgb), 0.4);
+  border: 1px solid var(--skeleton);
   padding: 0.1rem 0.6rem;
   color: black;
 }
 
 input::placeholder {
   font-size: 0.7rem;
-  color: rgba(var(--overlay-rgb), 0.4);
+  color: var(--skeleton);
 }
 
 input:focus {

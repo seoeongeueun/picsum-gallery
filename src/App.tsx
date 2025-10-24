@@ -26,20 +26,21 @@ function App() {
     const header = headerRef.current;
     if (!header) return;
 
+    const headerHeight = header.offsetHeight;
     //헤더의 높이를 저장
     document.documentElement.style.setProperty(
       "--header-height",
-      `${header.offsetHeight}`
+      `${headerHeight}`
     );
-
+    console.log(headerHeight);
     const handleScrollDetection = () => {
       const current = window.scrollY;
 
-      if (current > lastScroll && current > 20) {
+      if (current > lastScroll && current > 30) {
         // 아래로 스크롤할때는 숨김
-        header.style.transform = "translateY(-100%)";
+        header.style.top = `-${headerHeight + 10}px`;
       } else if (current < lastScroll) {
-        header.style.transform = "translateY(0)";
+        header.style.top = "0";
       }
 
       lastScroll = current;
@@ -53,7 +54,7 @@ function App() {
     <div className="px-2 md:px-4 lg:px-12 w-full h-full flex flex-col">
       <header
         ref={headerRef}
-        className="fixed top-0 transition-transform duration-500 pointer-events-none z-50 py-4 flex flex-col items-center justify-center justify-self-center w-full bg-background"
+        className="fixed top-0 transition-[top] duration-500 ease-out pointer-events-none z-50 py-4 flex flex-col items-center justify-center justify-self-center w-full bg-background"
       >
         <h1 className="text-theme p-4 font-paperozi font-extrabold">
           Picsum Gallery
