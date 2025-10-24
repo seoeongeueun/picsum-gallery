@@ -27,10 +27,19 @@ export default function ImageCard({ img }: { img: GalleryImage }) {
         src={`https://picsum.photos/id/${img.id}/700/${Math.trunc(
           700 / ratio
         )}`}
+        srcSet={`
+          https://picsum.photos/id/${img.id}/500/${Math.trunc(
+          500 / ratio
+        )} 500w,
+          https://picsum.photos/id/${img.id}/700/${Math.trunc(700 / ratio)} 700w
+        `}
+        sizes="(max-width: 1024px) 500px, 700px"
+        decoding="async"
         alt={`Photo by ${img.author}`}
         className="w-full h-full object-cover opacity-0 z-10 group-hover:brightness-50 cursor-zoom-in pointer-events-auto"
         onClick={() => handleImageClick(img.id)}
         onLoad={(e) => (e.currentTarget.style.opacity = "1")}
+        loading="lazy"
       />
       <figcaption
         aria-label="작가명"

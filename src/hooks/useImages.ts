@@ -14,11 +14,15 @@ import type { GalleryImage } from "@/types/types";
 export function useImages() {
   const queryClient = useQueryClient();
 
-  const prefetchImages = () =>
-    queryClient.prefetchQuery({
-      queryKey: ["images", 1],
-      queryFn: () => fetchImagesByPageFn(1),
-    });
+  const prefetchImages = async () => {
+    if (!queryClient.getQueryData(["images"])) {
+      queryClient.prefetchInfiniteQuery({
+        queryKey: ["images"],
+        queryFn: ({ pageParam = 1 }) => fetchImagesByPageFn(pageParam),
+        initialPageParam: 1,
+      });
+    }
+  };
 
   const useFetchImage = (id: string) =>
     useQuery({

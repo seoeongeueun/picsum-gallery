@@ -41,6 +41,7 @@ export default function Gallery() {
 
   useLayoutEffect(() => {
     if (isLoading || !images?.length || !gridRef.current) return;
+    const start = performance.now();
 
     const { cols, colWidth } = layout;
     const container = gridRef.current;
@@ -67,6 +68,11 @@ export default function Gallery() {
       });
 
       container.style.height = `${Math.max(...colHeights)}px`;
+
+      const end = performance.now();
+      console.log(
+        `Layout pass (${items.length} items): ${(end - start).toFixed(2)} ms`
+      );
     });
   }, [images, isLoading, layout]);
 
@@ -96,7 +102,11 @@ export default function Gallery() {
           <ImageCard key={img.id} img={img} />
         ))}
 
-        <div ref={loadMoreRef} className="absolute bg-transparent h-8 w-full" />
+        <div
+          ref={loadMoreRef}
+          aria-hidden="true"
+          className="absolute bg-transparent h-8 w-full"
+        />
       </section>
       <div className="fixed bottom-4 z-40 justify-self-center">
         {isFetchingNextPage && <Spinner />}

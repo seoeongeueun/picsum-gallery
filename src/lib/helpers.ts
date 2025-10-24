@@ -11,6 +11,20 @@ export function debounce<T extends (...args: unknown[]) => void>(
   };
 }
 
+export function throttle<T extends (...args: unknown[]) => void>(
+  func: T,
+  limit = 150
+) {
+  let inThrottle: boolean;
+  return function (this: unknown, ...args: Parameters<T>) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+}
+
 export function packImages(images: GalleryImage[]) {
   if (!Array.isArray(images) || images.some((img) => !img)) {
     console.warn("packImages(): invalid images array", images);

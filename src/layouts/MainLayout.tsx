@@ -4,6 +4,8 @@ import Interests from "@/components/Interests/Section";
 import MenuNav from "@/components/MenuNav";
 import { useState, useEffect, useRef } from "react";
 import type { MenuType } from "@/types/types";
+import { useImages } from "@/hooks/useImages";
+import { throttle } from "@/lib/helpers";
 
 //선택 메뉴에 따라 섹션 컴포넌트 반환
 const sections: Record<MenuType, React.JSX.Element> = {
@@ -15,6 +17,7 @@ const sections: Record<MenuType, React.JSX.Element> = {
 export default function MainLayout() {
   const [menu, setMenu] = useState<MenuType>("gallery");
   const headerRef = useRef<HTMLDivElement>(null);
+  const { prefetchImages } = useImages();
 
   // 위로가기 버튼
   const handleScrollToTop = () => {
@@ -22,29 +25,25 @@ export default function MainLayout() {
   };
 
   useEffect(() => {
-    let lastScroll = 0;
+    prefetchImages(); //미리 1 페이지 이미지를 가져오기
+
     const header = headerRef.current;
     if (!header) return;
 
-    const headerHeight = header.offsetHeight;
-    //헤더의 높이를 저장
-    document.documentElement.style.setProperty(
-      "--header-height",
-      `${headerHeight}`
-    );
+    let lastScroll = 0;
 
-    const handleScrollDetection = () => {
+    const handleScrollDetection = throttle(() => {
       const current = window.scrollY;
 
       if (current > lastScroll && current > 30) {
         // 아래로 스크롤할때는 숨김
-        header.style.top = `-${headerHeight + 10}px`;
+        header.style.top = `-${header.offsetHeight + 10}px`;
       } else if (current < lastScroll) {
         header.style.top = "0";
       }
 
       lastScroll = current;
-    };
+    }, 150);
     window.addEventListener("scroll", handleScrollDetection);
 
     return () => window.removeEventListener("scroll", handleScrollDetection);
