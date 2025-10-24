@@ -9,6 +9,7 @@ import Spinner from "@/components/Spinner";
 
 export default function Interests() {
   const ids = useSelectedImageStore((s) => s.selectedIds);
+  const toggleId = useSelectedImageStore((s) => s.toggleId);
   const { useFetchImagesByIds } = useImages();
   const [rects, setRects] = useState<Rect<GalleryImage>[]>();
   const wallRef = useRef<HTMLDivElement>(null);
@@ -79,8 +80,10 @@ export default function Interests() {
     return () => ctx.revert();
   }, [rects]);
 
-  const dropAnimation = (frame: HTMLImageElement) => {
+  const dropAnimation = (frame: HTMLImageElement, id: string) => {
     if (!wallRef.current) return;
+
+    toggleId(id, true); //리렌더 없이 id를 리스트에서 제거
 
     const wall = wallRef.current!;
     const wallH = wall.clientHeight;
@@ -91,8 +94,6 @@ export default function Interests() {
 
     const tl = gsap.timeline({
       defaults: { ease: "power2.in" },
-      //애니메이션 완료 후 리스트에서 클릭된 아이디를 제거
-      //onComplete: () => toggleId(id),
     });
 
     frame.style.zIndex = "50";
@@ -143,7 +144,7 @@ export default function Interests() {
                 500 / (rect.width / rect.height)
               )}`}
               alt={`Frame of ${rect.data.author}'s photo`}
-              onClick={(e) => dropAnimation(e.currentTarget)}
+              onClick={(e) => dropAnimation(e.currentTarget, rect.data.id)}
               className="frame hover:rotate-1"
               style={{
                 position: "absolute",

@@ -1,8 +1,9 @@
 import type { GalleryImage } from "@/types/types";
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelectedImageStore } from "@/stores/useSelectedImageStore";
 
-export default function ImageCard({ img }: { img: GalleryImage }) {
+function ImageCard({ img }: { img: GalleryImage }) {
   const toggleId = useSelectedImageStore((s) => s.toggleId);
   const navigate = useNavigate();
 
@@ -50,3 +51,5 @@ export default function ImageCard({ img }: { img: GalleryImage }) {
     </figure>
   );
 }
+
+export default memo(ImageCard);
