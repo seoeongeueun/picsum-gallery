@@ -1,6 +1,6 @@
 ## 👀 Picsum Gallery
 
-![interests](/public/interests.png)
+![interests](./public/interests.png)
 
 Picsum Gallery의 이미지 목록을 둘러보고 흥미로운 사진을 나만의 벽에 전시해보세요!
 
@@ -13,7 +13,6 @@ Picsum Gallery의 이미지 목록을 둘러보고 흥미로운 사진을 나만
 사용 스택:
 Typescript, React, TanStack Query, Zustand, [MaxRectsPacker](https://www.npmjs.com/package/maxrects-packer), React Router Dom, GSAP, Tailwind CSS
 사용 API: https://picsum.photos/
-
 
 ### 실행
 
@@ -61,7 +60,6 @@ npm run dev
 이 과정에서 requestAnimationFrame과 transition을 사용해 부드럽고 안정적인 배치 애니메이션을 구현했습니다.
 디바이스 너비가 바뀌더라도 자연스럽게 레이아웃을 재배치합니다.
 
-
 **무한스크롤**
 
 ```js
@@ -103,7 +101,6 @@ const useInfiniteImages = () => {
 React Query의 useInfiniteQuery를 사용해 API 요청을 캐싱하고 페이지 단위로 데이터를 관리합니다.
 
 무한 스크롤 구조상 데이터 배열이 중첩되므로 렌더링 시점에는 pages.flat()을 통해 1차원 배열로 변환하여 처리했습니다.
-
 
 **스크롤 복원**
 
@@ -170,7 +167,6 @@ React Query의 useInfiniteQuery를 사용해 API 요청을 캐싱하고 페이�
 
 레이아웃 계산을 기다리는 layoutReadyRef 플래그와 더블 requestAnimationFrame을 이용해 paint 단계 이후의 프레임까지 기다려 실제 브라우저 화면에 이미지가 완전히 배치된 뒤 복원을 적용했습니다.
 
-
 **선택 이미지 스토어**
 
 ```js
@@ -206,7 +202,6 @@ Zustand를 사용해 선택된 이미지를 관리하는 글로벌 스토어를 
 silent 플래그를 이용해 일부 상태 변경 시 리렌더링을 의도적으로 방지하여
 UI를 유지하면서 데이터를 업데이트 했습니다.
 선택된 이미지는 이후 Interests 섹션에서 액자 형태로 배치합니다.
-
 
 **액자 배치**
 
@@ -275,8 +270,6 @@ tl.to(frame, {
 액자를 클릭하면 GSAP 기반의 3D 낙하 애니메이션으로 제거되며,
 Zustand 스토어에서 silent 모드로 해당 ID를 제거해 UI 갱신 없는 자연스러운 삭제 효과를 구현했습니다.
 
-
-
 ### 최적화 과정
 
 **이미지 최적화**
@@ -316,7 +309,6 @@ loading="lazy"와 decoding="async"을 함께 사용하여 렌더 차단을 최�
 
 로딩 중엔 스켈레톤 UI를 표시하여 UX 저하를 방지합니다.
 
-
 **React Query 캐싱**
 
 ```js
@@ -343,7 +335,6 @@ const useFetchImagesByIds = (ids: Set<string>) =>
 
 모든 API 요청은 TanStack Query로 관리되며, useQuery, useInfiniteQuery 외에도 useQueries를 활용해서 다중 id 병렬 요청 구조를 사용했습니다.
 
-
 **기타 최적화**
 
 열 개수를 브라우저 너비에 따라 동적 계산
@@ -353,8 +344,6 @@ Masonry 연산 시 requestAnimationFrame으로 부드럽게 적용
 디바운스/쓰로틀을 통한 스크롤 이벤트 부하 감소
 
 로딩 스피너, 스켈레톤, 반응형 레이아웃 등 사용자 체감 품질 개선
-
-
 
 ### 추가 기능
 
@@ -391,15 +380,7 @@ Picsum의 seed 기반 엔드포인트를 이용해
 
 결과 이미지는 폴라로이드 카드 스타일을 추가해서 갤러리의 기념품 느낌으로 만들었습니다.
 
-🧭 프로젝트 회고
+### 프로젝트 회고
 
-라이브러리 없이 Masonry 레이아웃을 직접 계산하며,
-브라우저 렌더링 타이밍(layout, paint)에 대한 이해가 크게 향상됨.
-
-React Query와 Zustand를 함께 사용하면서,
-데이터 캐싱과 상태 관리의 역할 분리를 명확히 체득함.
-
-더블 requestAnimationFrame을 통한 브라우저 렌더링 타이밍 제어가 실제 UX에 큰 영향을 줌을 경험함.
-
-성능과 UX 사이의 균형을 고민하며,
-**“끊김 없는 탐색 경험”**을 중심으로 설계한 프로젝트.
+데이터 관리와 무한 스크롤 구조를 직접 설계하면서 성능과 사용자 경험을 함께 고려했습니다.
+구현하고 싶은 기능이 많아 시간에 쫓긴 것이 아쉽지만 레이아웃 계산과 스크롤 복원 과정을 최적화하며 한 페이지 안에서의 자연스러운 흐름을 연구하고 많이 배운 시간이었습니다.

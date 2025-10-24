@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState, useLayoutEffect } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useLayoutEffect,
+  useCallback,
+} from "react";
 import { useImages } from "@/hooks/useImages";
 import { debounce } from "@/lib/helpers";
 import ImageCard from "./ImageCard";
@@ -57,33 +63,30 @@ export default function Gallery() {
     const items = Array.from(container.children) as HTMLElement[];
     const colHeights = new Array(cols).fill(0);
 
-    // 부드러운 레아아웃 적용을 위해
-    requestAnimationFrame(() => {
-      items.forEach((item) => {
-        // 현재 가장 짧은 col의 인덱스를 찾아서 이미지를 배치
-        let minCol = 0;
-        for (let c = 1; c < cols; c++) {
-          if (colHeights[c] < colHeights[minCol]) minCol = c;
-        }
-
-        item.style.width = `${colWidth}px`;
-        item.style.left = `${minCol * colWidth}px`;
-        item.style.top = `${colHeights[minCol]}px`;
-
-        // 이미지의 비율 기반 높이 계산
-        const ratio = parseFloat(item.dataset.ratio || "1");
-        const height = colWidth / ratio;
-        colHeights[minCol] += height;
-      });
-
-      container.style.height = `${Math.max(...colHeights)}px`;
-
-      //레이아웃 계산 완료
-      if (layoutReadyRef.current) {
-        layoutReadyRef.current();
-        layoutReadyRef.current = null;
+    items.forEach((item) => {
+      // 현재 가장 짧은 col의 인덱스를 찾아서 이미지를 배치
+      let minCol = 0;
+      for (let c = 1; c < cols; c++) {
+        if (colHeights[c] < colHeights[minCol]) minCol = c;
       }
+
+      item.style.width = `${colWidth}px`;
+      item.style.left = `${minCol * colWidth}px`;
+      item.style.top = `${colHeights[minCol]}px`;
+
+      // 이미지의 비율 기반 높이 계산
+      const ratio = parseFloat(item.dataset.ratio || "1");
+      const height = colWidth / ratio;
+      colHeights[minCol] += height;
     });
+
+    container.style.height = `${Math.max(...colHeights)}px`;
+
+    //레이아웃 계산 완료
+    if (layoutReadyRef.current) {
+      layoutReadyRef.current();
+      layoutReadyRef.current = null;
+    }
   }, [images, isLoading, layout]);
 
   useEffect(() => {
@@ -101,6 +104,13 @@ export default function Gallery() {
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
+  const handleSaveScroll = useCallback(
+    (y: number) => {
+      saveScrollState(y);
+    },
+    [saveScrollState]
+  );
+
   return (
     <>
       <section
@@ -109,7 +119,7 @@ export default function Gallery() {
         className="relative w-full flex justify-center items-start overflow-x-hidden"
       >
         {images?.map((img) => (
-          <ImageCard key={img.id} img={img} onSaveScroll={saveScrollState} />
+          <ImageCard key={img.id} img={img} onSaveScroll={handleSaveScroll} />
         ))}
 
         <div
