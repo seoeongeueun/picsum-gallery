@@ -1,6 +1,6 @@
 ## 👀 Picsum Gallery
 
-![interests](./public/interests.png)
+![interests](./public/images/interests.png)
 
 Picsum Gallery의 이미지 목록을 둘러보고 흥미로운 사진을 나만의 벽에 전시해보세요!
 
@@ -18,12 +18,15 @@ Typescript, React, TanStack Query, Zustand, [MaxRectsPacker](https://www.npmjs.c
 
 ```js
 npm install
-npm run dev
+npm run build
+npm run preview
 ```
 
 ### 주요 기능
 
 **Masonry 레이아웃**
+![main](./public/images/main.png)
+
 핀터레스트 스타일 이미지 정렬, 즉 Masonry 레이아웃은 이전에 [다른 프로젝트](https://www.ba-ton.kr/) 에서 라이브러리를 사용해서 구현한 적이 있기 때문에 이번에는 직접 계산하는 방식으로 제작했습니다.
 
 ```js
@@ -204,6 +207,7 @@ UI를 유지하면서 데이터를 업데이트 했습니다.
 선택된 이미지는 이후 Interests 섹션에서 액자 형태로 배치합니다.
 
 **액자 배치**
+![interests](./public/images/interests.png)
 
 ```js
 function packImages(images: GalleryImage[]): Rect<GalleryImage>[] {
@@ -348,6 +352,7 @@ Masonry 연산 시 requestAnimationFrame으로 부드럽게 적용
 ### 추가 기능
 
 **랜덤 포토카드**
+![lucky](./public/images/lucky.png)
 
 ```js
 const useFetchImageBySeed = (seed: string) =>
