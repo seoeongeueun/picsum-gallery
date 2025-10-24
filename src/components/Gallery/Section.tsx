@@ -4,7 +4,6 @@ import { debounce } from "@/lib/helpers";
 import ImageCard from "./ImageCard";
 import Spinner from "@/components/Spinner";
 import "./gallery.css";
-import { throttle } from "@/lib/helpers";
 
 export default function Gallery() {
   const { useInfiniteImages } = useImages();
@@ -21,10 +20,11 @@ export default function Gallery() {
 
   const gridRef = useRef<HTMLDivElement>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
+  const layoutReadyRef = useRef<(() => void) | null>(null); //masonry 레이아웃 계산 완료 플래그
 
   // 반응형 열 개수 변경
   useEffect(() => {
-    restoreScrollState();
+    restoreScrollState(layoutReadyRef); //페이지 마운트시 스크롤 복구 먼저 시도
 
     const updateLayout = () => {
       const container = gridRef.current;
@@ -78,7 +78,11 @@ export default function Gallery() {
 
       container.style.height = `${Math.max(...colHeights)}px`;
 
-      requestAnimationFrame(() => restoreScrollState());
+      //레이아웃 계산 완료
+      if (layoutReadyRef.current) {
+        layoutReadyRef.current();
+        layoutReadyRef.current = null;
+      }
     });
   }, [images, isLoading, layout]);
 

@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import clsx from "clsx";
 import "./detail.css";
+import Spinner from "@/components/Spinner";
 
 export default function DetailPage() {
   const { useFetchImage } = useImages();
   const { id } = useParams();
-  const { data: image, isFetching, isError } = useFetchImage(id);
+  const { data: image, isFetching, isError } = useFetchImage(id!);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   if (!id || isError) return <span>Unexpected Error: please try again</span>;
@@ -27,9 +28,7 @@ export default function DetailPage() {
             onLoad={() => setIsLoaded(true)}
           />
         )}
-        {!isLoaded && (
-          <div className="absolute bg-skeleton w-30 h-30 animate-ping"></div>
-        )}
+        {!isLoaded && <Spinner />}
       </figure>
       <aside
         aria-label="이미지 정보"

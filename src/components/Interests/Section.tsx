@@ -14,7 +14,7 @@ export default function Interests() {
   const [rects, setRects] = useState<Rect<GalleryImage>[]>();
   const wallRef = useRef<HTMLDivElement>(null);
 
-  const { data: images, isFetching, isError } = useFetchImagesByIds(ids);
+  const { data: images, isFetching } = useFetchImagesByIds(ids);
 
   useEffect(() => {
     if (!isFetching && images && images.length > 0) {

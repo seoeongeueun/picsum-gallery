@@ -6,7 +6,7 @@ export default function LuckySection() {
   const [seed, setSeed] = useState<string>("");
   const { useFetchImageBySeed } = useImages();
 
-  const { data: imgUrl, isFetching, isError } = useFetchImageBySeed(seed);
+  const { data: imgUrl, isFetching } = useFetchImageBySeed(seed);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

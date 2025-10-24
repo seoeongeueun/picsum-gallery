@@ -1,5 +1,3 @@
-import type { GalleryImage } from "@/types/types";
-
 export function debounce<T extends (...args: unknown[]) => void>(
   fn: T,
   delay = 200

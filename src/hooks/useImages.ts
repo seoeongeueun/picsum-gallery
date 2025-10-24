@@ -61,7 +61,9 @@ export function useImages() {
       });
     };
 
-    const restoreScrollState = async () => {
+    const restoreScrollState = async (
+      layoutReadyRef: React.RefObject<(() => void) | null>
+    ) => {
       const scrollData = queryClient.getQueryData<{
         scrollY: number;
         pageCount: number;
@@ -74,7 +76,17 @@ export function useImages() {
         await query.fetchNextPage();
       }
 
-      // 모든 데이터 로딩 후 스크롤 복원
+      //masonry 계산을 기다리기
+      await new Promise<void>((resolve) => {
+        layoutReadyRef.current = resolve;
+      });
+
+      // paint 단계가 끝나기를 기다림
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+      );
+
+      // 모든 작업 끝난 후 스크롤 복원
       window.scrollTo({
         top: scrollData.scrollY,
         behavior: "instant" as ScrollBehavior,
