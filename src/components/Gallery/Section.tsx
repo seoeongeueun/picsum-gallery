@@ -7,8 +7,15 @@ import "./gallery.css";
 
 export default function Gallery() {
   const { useInfiniteImages } = useImages();
-  const { images, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteImages();
+  const {
+    images,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    saveScrollState,
+    restoreScrollState,
+  } = useInfiniteImages();
   const [layout, setLayout] = useState({ cols: 4, colWidth: 0 });
 
   const gridRef = useRef<HTMLDivElement>(null);
@@ -73,6 +80,7 @@ export default function Gallery() {
       console.log(
         `Layout pass (${items.length} items): ${(end - start).toFixed(2)} ms`
       );
+      requestAnimationFrame(() => restoreScrollState());
     });
   }, [images, isLoading, layout]);
 
@@ -99,7 +107,7 @@ export default function Gallery() {
         className="relative w-full flex justify-center items-start overflow-x-hidden"
       >
         {images?.map((img) => (
-          <ImageCard key={img.id} img={img} />
+          <ImageCard key={img.id} img={img} onSaveScroll={saveScrollState} />
         ))}
 
         <div

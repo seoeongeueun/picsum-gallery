@@ -51,9 +51,42 @@ export function useImages() {
     // masonry 적용 가능하게 데이터 배열을 flatten 후 반환
     const images = query.data?.pages.flat() ?? [];
 
+    const saveScrollState = (y: number) => {
+      if (!query.data) return;
+      console.log(y);
+      queryClient.setQueryData(["images", "scroll"], {
+        scrollY: y,
+        pageCount: query.data.pages.length,
+        timestamp: Date.now(),
+      });
+    };
+
+    const restoreScrollState = async () => {
+      const scrollData = queryClient.getQueryData<{
+        scrollY: number;
+        pageCount: number;
+      }>(["images", "scroll"]);
+
+      if (!scrollData) return;
+
+      // 필요한 페이지 수까지 fetchNextPage 실행
+      while ((query.data?.pages.length ?? 0) < scrollData.pageCount) {
+        await query.fetchNextPage();
+      }
+
+      console.log(scrollData.scrollY);
+      // 모든 데이터 로딩 후 스크롤 복원
+      window.scrollTo({
+        top: scrollData.scrollY,
+        behavior: "instant" as ScrollBehavior,
+      });
+    };
+
     return {
       ...query,
       images,
+      saveScrollState,
+      restoreScrollState,
     };
   };
 

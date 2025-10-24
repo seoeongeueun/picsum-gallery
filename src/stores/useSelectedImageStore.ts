@@ -3,7 +3,7 @@ import { create } from "zustand";
 interface SelectedImageStore {
   selectedIds: Set<string>;
   maxSelected: number;
-  toggleId: (id: string, silent: boolean) => void;
+  toggleId: (id: string, silent?: boolean) => void;
   clear: () => void;
   isSelected: (id: string) => boolean;
 }

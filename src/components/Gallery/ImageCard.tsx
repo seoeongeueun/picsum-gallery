@@ -3,7 +3,12 @@ import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelectedImageStore } from "@/stores/useSelectedImageStore";
 
-function ImageCard({ img }: { img: GalleryImage }) {
+interface ImageCardProps {
+  img: GalleryImage;
+  onSaveScroll: (y: number) => void;
+}
+
+function ImageCard({ img, onSaveScroll }: ImageCardProps) {
   const toggleId = useSelectedImageStore((s) => s.toggleId);
   const navigate = useNavigate();
 
@@ -11,8 +16,13 @@ function ImageCard({ img }: { img: GalleryImage }) {
   const ratio = img.width / img.height;
 
   const handleImageClick = (id: string) => {
+    onSaveScroll(window.scrollY); //카드 클릭 트리거 전 현재 스크롤 위치 저장
     toggleId(id);
-    navigate(`/image/${img.id}`); //상세 페이지로 이동
+
+    // 먼저 스크롤 저장 후 상세 페이지로 이동
+    requestAnimationFrame(() => {
+      navigate(`/image/${id}`);
+    });
   };
 
   return (
