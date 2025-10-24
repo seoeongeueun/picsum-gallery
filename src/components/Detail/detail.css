@@ -1,0 +1,7 @@
+.frame {
+    background-color:rgb(192, 192, 192);
+    border: 1rem solid #ffffff;
+    padding: 0.5rem;
+    box-shadow: inset 0 0 3px 1px rgba(73, 69, 68, 0.3), 2px 3px 3px 3px rgba(61, 58, 58, 0.3);
+    outline: 5px solid #383838;
+}

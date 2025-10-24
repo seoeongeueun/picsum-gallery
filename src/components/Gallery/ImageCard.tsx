@@ -1,11 +1,18 @@
 import type { GalleryImage } from "@/types/types";
+import { useNavigate } from "react-router-dom";
 import { useSelectedImageStore } from "@/stores/useSelectedImageStore";
 
 export default function ImageCard({ img }: { img: GalleryImage }) {
   const toggleId = useSelectedImageStore((s) => s.toggleId);
+  const navigate = useNavigate();
 
   // 원본의 비율을 유지할 수 있도록 미리 계산 후 data에 지정
   const ratio = img.width / img.height;
+
+  const handleImageClick = (id: string) => {
+    toggleId(id);
+    navigate(`/image/${img.id}`); //상세 페이지로 이동
+  };
 
   return (
     <figure
@@ -22,7 +29,7 @@ export default function ImageCard({ img }: { img: GalleryImage }) {
         )}`}
         alt={`Photo by ${img.author}`}
         className="w-full h-full object-cover opacity-0 z-10 group-hover:brightness-50 cursor-zoom-in pointer-events-auto"
-        onClick={() => toggleId(img.id)}
+        onClick={() => handleImageClick(img.id)}
         onLoad={(e) => (e.currentTarget.style.opacity = "1")}
       />
       <figcaption
