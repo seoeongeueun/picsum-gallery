@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useLayoutEffect } from "react";
 import { useImages } from "@/hooks/useImages";
 import { debounce } from "@/lib/helpers";
 import ImageCard from "./ImageCard";
+import Spinner from "@/components/Spinner";
 import "./gallery.css";
 
 export default function Gallery() {
@@ -41,8 +42,6 @@ export default function Gallery() {
   useLayoutEffect(() => {
     if (isLoading || !images?.length || !gridRef.current) return;
 
-    const start = performance.now();
-
     const { cols, colWidth } = layout;
     const container = gridRef.current;
     const items = Array.from(container.children) as HTMLElement[];
@@ -51,16 +50,14 @@ export default function Gallery() {
     // 부드러운 레아아웃 적용을 위해
     requestAnimationFrame(() => {
       items.forEach((item) => {
-        // 현재 가장 짧은 col의 인덱스를 찾기
+        // 현재 가장 짧은 col의 인덱스를 찾아서 이미지를 배치
         let minCol = 0;
         for (let c = 1; c < cols; c++) {
           if (colHeights[c] < colHeights[minCol]) minCol = c;
         }
 
-        const left = minCol * colWidth;
-        item.style.position = "absolute";
         item.style.width = `${colWidth}px`;
-        item.style.left = `${left}px`;
+        item.style.left = `${minCol * colWidth}px`;
         item.style.top = `${colHeights[minCol]}px`;
 
         // 이미지의 비율 기반 높이 계산
@@ -69,13 +66,7 @@ export default function Gallery() {
         colHeights[minCol] += height;
       });
 
-      container.style.position = "relative";
       container.style.height = `${Math.max(...colHeights)}px`;
-
-      const end = performance.now();
-      console.log(
-        `Layout pass (${items.length} items): ${(end - start).toFixed(2)} ms`
-      );
     });
   }, [images, isLoading, layout]);
 
@@ -104,8 +95,12 @@ export default function Gallery() {
         {images?.map((img) => (
           <ImageCard key={img.id} img={img} />
         ))}
-        <div ref={loadMoreRef} className="bg-transparent h-8 w-full" />
+
+        <div ref={loadMoreRef} className="absolute bg-transparent h-8 w-full" />
       </section>
+      <div className="fixed bottom-4 z-40 justify-self-center">
+        {isFetchingNextPage && <Spinner />}
+      </div>
     </>
   );
 }

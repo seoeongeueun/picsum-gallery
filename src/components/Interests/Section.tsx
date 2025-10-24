@@ -5,6 +5,7 @@ import { MaxRectsPacker } from "maxrects-packer";
 import gsap from "gsap";
 import { useEffect, useState, useRef, useLayoutEffect } from "react";
 import "./interests.css";
+import Spinner from "@/components/Spinner";
 
 export default function Interests() {
   const ids = useSelectedImageStore((s) => s.selectedIds);
@@ -128,7 +129,7 @@ export default function Interests() {
       <div ref={wallRef} className="relative w-full h-full images-wall">
         {isFetching ? (
           <div className="absolute inset-0 flex justify-center items-center text-theme">
-            Loading...
+            <Spinner isCenter={false} />
           </div>
         ) : !images || images?.length === 0 ? (
           <div className="absolute inset-0 flex justify-center items-center text-theme">

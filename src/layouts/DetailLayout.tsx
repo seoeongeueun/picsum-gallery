@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, Link } from "react-router-dom";
 
 export default function DetailLayout() {
   const navigate = useNavigate();
@@ -10,9 +10,9 @@ export default function DetailLayout() {
   return (
     <div className="w-full flex flex-col">
       <header className="p-4 bg-background w-full h-fit flex flex-row justify-between items-center">
-        <h2 className="text-theme p-4 font-paperozi font-extrabold break-all">
-          Picsum Gallery
-        </h2>
+        <h3 className="text-theme p-4 font-paperozi font-extrabold break-all">
+          <Link to="/">Picsum Gallery</Link>
+        </h3>
         <nav aria-label="페이지 이동">
           <button
             type="button"

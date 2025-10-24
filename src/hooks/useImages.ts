@@ -66,6 +66,7 @@ export function useImages() {
         queryKey: ["image", id],
         queryFn: () => fetchImageByIdFn(id),
         enabled: !!id,
+        keepPreviousData: true, //기존 캐시를 유지 해서 언마운트방지
       })),
       combine: (results) => {
         return {

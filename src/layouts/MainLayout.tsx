@@ -61,7 +61,7 @@ export default function MainLayout() {
         </h1>
         <MenuNav selected={menu} onSelect={setMenu} />
       </header>
-      <main className="pt-44 w-full h-full">{sections[menu]}</main>
+      <main className="pt-36 md:pt-44 w-full h-full">{sections[menu]}</main>
       {menu === "gallery" && (
         <footer className="pointer-events-none block float-left fixed bottom-0 p-4 z-50 w-full">
           <button
