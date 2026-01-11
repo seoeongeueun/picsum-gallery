@@ -8,7 +8,7 @@ Picsum Gallery의 이미지 목록을 둘러보고 흥미로운 사진을 나만
 
 핀터레스트 스타일의 무한 스크롤 이미지 목록을 직접 구현하고, 갤러리라는 컨셉에 맞춰 몇 가지 재미있는 기능을 추가했습니다.
 
-사용자가 흥미롭게 스크롤하며 이미지를 탐색하고, 선택하여 나만의 전시 공간을 구성하는 상호작용 중심의 UI를 구현했습니다.
+사용자가 흥미롭게 스크롤하며 이미지를 탐색하고 선택하여 나만의 전시 공간을 구성하는 상호작용 중심의 UI로 구현했습니다.
 
 사용 스택:
 Typescript, React, TanStack Query, Zustand, [MaxRectsPacker](https://www.npmjs.com/package/maxrects-packer), React Router Dom, GSAP, Tailwind CSS
@@ -27,7 +27,7 @@ npm run preview
 **Masonry 레이아웃**
 ![main](./public/images/main.png)
 
-핀터레스트 스타일 이미지 정렬, 즉 Masonry 레이아웃은 이전에 [다른 프로젝트](https://www.ba-ton.kr/) 에서 라이브러리를 사용해서 구현한 적이 있기 때문에 이번에는 직접 계산하는 방식으로 제작했습니다.
+핀터레스트 스타일 이미지 정렬, 즉 Masonry 레이아웃은 이전에 [다른 프로젝트](https://www.ba-ton.kr/) 에서 라이브러리를 사용해서 구현한 적이 있기 때문에 이번에는 직접 계산하는 방식으로 구현했습니다.
 
 ```js
  const items = Array.from(container.children) as HTMLElement[];
@@ -384,8 +384,3 @@ Picsum의 seed 기반 엔드포인트를 이용해
 사용자가 단어를 입력하면 해당 시드를 기반으로 이미지를 가져옵니다.
 
 결과 이미지는 폴라로이드 카드 스타일을 추가해서 갤러리의 기념품 느낌으로 만들었습니다.
-
-### 프로젝트 회고
-
-데이터 관리와 무한 스크롤 구조를 직접 설계하면서 성능과 사용자 경험을 함께 고려했습니다.
-구현하고 싶은 기능이 많아 시간에 쫓긴 것이 아쉽지만 레이아웃 계산과 스크롤 복원 과정을 최적화하며 한 페이지 안에서의 자연스러운 흐름을 연구하고 많이 배운 시간이었습니다.

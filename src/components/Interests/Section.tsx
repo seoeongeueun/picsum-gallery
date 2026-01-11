@@ -133,8 +133,9 @@ export default function Interests() {
             <Spinner isCenter={false} />
           </div>
         ) : !images || images?.length === 0 ? (
-          <div className="absolute inset-0 flex justify-center items-center text-theme">
-            Interests Gallery is Empty 🕳️
+          <div className="absolute inset-0 flex justify-center items-center text-theme flex-col">
+            <p>Interests Gallery is empty 🕳️</p>
+            <span>Try clicking on some images!</span>
           </div>
         ) : (
           rects?.map((rect) => (
